@@ -1,5 +1,15 @@
 import { createSlice } from "@reduxjs/toolkit";
-const initialState = {};
+import { Listing } from "../../global-types";
+
+export interface ListingsState {
+	loading: boolean;
+	listings: Listing[] | null;
+}
+
+const initialState: ListingsState = {
+	loading: false,
+	listings: null,
+};
 
 const listingsSlice = createSlice({
 	name: "listings",
@@ -7,4 +17,5 @@ const listingsSlice = createSlice({
 	reducers: {},
 });
 
+export const listingsSliceActions = listingsSlice.actions;
 export const listingsSliceReducer = listingsSlice.reducer;
