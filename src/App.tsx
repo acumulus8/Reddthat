@@ -1,25 +1,19 @@
 import React from "react";
-import { createBrowserRouter, createRoutesFromElements, Route, RouterProvider } from "react-router-dom";
-import { Layout } from "antd";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import { ConfigProvider as ThemeProvider } from "antd";
 
-import HomePage from "./pages/home/HomePage";
-import PageHeader from "./components/PageHeader";
+import Root from "./routes/root/Root";
+import Home from "./routes/home/Home";
 import "./styles/App.css";
+import { theme } from "./styles/theme";
 
-const { Content } = Layout;
+const router = createBrowserRouter([{ path: "/", element: <Root />, children: [{ path: "/:listingType?", element: <Home /> }] }]);
 
-const router = createBrowserRouter(createRoutesFromElements(<Route path="/" element={<HomePage />} />));
-
-const App: React.FC = () => {
+const App = () => {
 	return (
-		<>
-			<PageHeader />
-			<Layout>
-				<Content>
-					<RouterProvider router={router} />
-				</Content>
-			</Layout>
-		</>
+		<ThemeProvider theme={theme}>
+			<RouterProvider router={router} />
+		</ThemeProvider>
 	);
 };
 

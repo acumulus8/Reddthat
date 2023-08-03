@@ -1,4 +1,24 @@
 export type Kind = "Listing" | "more" | "t1" | "t2" | "t3" | "t4" | "t5";
+export type Scopes =
+	| "identity"
+	| "edit"
+	| "flair"
+	| "history"
+	| "modconfig"
+	| "modflair"
+	| "modlog"
+	| "modposts"
+	| "modwiki"
+	| "mysubreddits"
+	| "privatemessages"
+	| "read"
+	| "report"
+	| "save"
+	| "submit"
+	| "subscribe"
+	| "vote"
+	| "wikiedit"
+	| "wikiread";
 
 export interface Thing {
 	id: string;
