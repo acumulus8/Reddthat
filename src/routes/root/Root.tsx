@@ -1,22 +1,24 @@
 import React from "react";
-import { useStore } from "react-redux";
+import { useSelector } from "react-redux";
 import { Outlet } from "react-router-dom";
-import { Layout, message } from "antd";
+import { Layout, message, Affix } from "antd";
 import PageHeader from "../../components/PageHeader";
 import { RootState } from "../../store";
 
-const { Content, Footer } = Layout;
+const { Content, Footer, Sider } = Layout;
 
 const Root = () => {
 	const [messageApi, contextHolder] = message.useMessage();
-	const store = useStore();
-	const state: RootState = store.getState() as RootState;
+	const { authentication, listings } = useSelector((state: RootState) => state);
 
 	React.useEffect(() => {
-		if (state.authentication.errorMessage) {
-			messageApi.open({ type: "error", content: state.authentication.errorMessage });
+		if (authentication.errorMessage) {
+			messageApi.open({ type: "error", content: authentication.errorMessage });
 		}
-	}, [state.authentication.errorMessage, messageApi]);
+		if (listings.errorMessage) {
+			messageApi.open({ type: "error", content: listings.errorMessage });
+		}
+	}, [authentication.errorMessage, listings.errorMessage, messageApi]);
 
 	return (
 		<Layout hasSider={false}>
@@ -26,9 +28,11 @@ const Root = () => {
 					{contextHolder}
 					<Outlet />
 				</Content>
-				<Layout.Sider theme="light" width={300} style={sidebarStyles}>
-					Sider
-				</Layout.Sider>
+				<Affix offsetTop={124}>
+					<Sider theme="light" width={300} style={sidebarStyles}>
+						Sider
+					</Sider>
+				</Affix>
 			</Layout>
 			<Footer style={{ textAlign: "center" }}>Reddthat (Reddit clone) Created by Tim Wilburn</Footer>
 		</Layout>
@@ -42,6 +46,7 @@ const appBodyStyles = {
 const sidebarStyles = {
 	padding: 24,
 	marginLeft: 40,
+	height: "calc(80vh - 160px)",
 };
 
 export default Root;

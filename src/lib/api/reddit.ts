@@ -1,9 +1,10 @@
-const { REACT_APP_REDDIT_CLIENT_ID, REACT_APP_REDDIT_APP_SECRET } = process.env;
+import { getTokenFromLocalStorage } from "../utils";
+import { Listing, Link } from "../../global-types";
 
-const userRequestHeaders = {
-	"Content-Type": "application/json",
-	"User-Agent": "web:com.reddthatportfolioapp:v0.1.0 (by /u/bigabear)",
-};
+const { REACT_APP_REDDIT_CLIENT_ID, REACT_APP_REDDIT_APP_SECRET } = process.env;
+const unAuthedRootUrl = "https://www.reddit.com/api/v1";
+const authedRootUrl = "https://oauth.reddit.com";
+const userAgent = "web:com.reddthatportfolioapp:v0.1.0 (by /u/bigabear)";
 
 export const RedditApi = {
 	getAppOnlyToken: async () => {
@@ -11,16 +12,46 @@ export const RedditApi = {
 		const appOnlyAuthString = btoa(REACT_APP_REDDIT_CLIENT_ID + ":" + REACT_APP_REDDIT_APP_SECRET);
 		body.append("grant_type", "client_credentials");
 
-		const response = await fetch("https://www.reddit.com/api/v1/access_token", {
+		const response = await fetch(`${unAuthedRootUrl}/access_token`, {
 			method: "POST",
 			mode: "cors",
 			credentials: "omit",
 			headers: {
-				"User-Agent": "web:com.reddthatportfolioapp:v0.1.0 (by /u/bigabear)",
+				"User-Agent": userAgent,
 				Authorization: `Basic ${appOnlyAuthString}`,
 			},
 			body: body,
 		});
+		const responseJson = await response.json();
+		return responseJson;
+	},
+	getListing: async (typeOrThingId: string, limit: number): Promise<Listing<Link>> => {
+		const token = getTokenFromLocalStorage();
+
+		const response = await fetch(`${authedRootUrl}/${typeOrThingId}?limit=${limit}`, {
+			method: "GET",
+			mode: "cors",
+			credentials: "omit",
+			headers: {
+				Authorization: `Bearer ${token}`,
+			},
+		});
+
+		const responseJson = await response.json();
+		return responseJson;
+	},
+	getCommentsForLink: async (permalink: string) => {
+		const token = getTokenFromLocalStorage();
+
+		const response = await fetch(`${authedRootUrl}/${permalink}?limit=20&depth=5`, {
+			method: "GET",
+			mode: "cors",
+			credentials: "omit",
+			headers: {
+				Authorization: `Bearer ${token}`,
+			},
+		});
+
 		const responseJson = await response.json();
 		return responseJson;
 	},

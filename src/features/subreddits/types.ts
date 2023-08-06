@@ -3,7 +3,7 @@ import { Thing } from "../../global-types";
 export type SubredditType = "public" | "private" | "restricted" | "gold_restricted" | "archived";
 export type SubmissionType = "any" | "link" | "self";
 
-export interface Subreddit extends Thing {
+export interface Subreddit {
 	accounts_active: number;
 	comment_score_hide_mins: number;
 	description: string;

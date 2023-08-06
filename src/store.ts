@@ -3,9 +3,10 @@ import logger from "redux-logger";
 import { TypedUseSelectorHook, useDispatch, useSelector } from "react-redux";
 import { listingsSliceReducer } from "./features/listings/listingsSlice";
 import { authenticationSliceReducer } from "./features/authentication/authenticationSlice";
+import { commentsSliceReducer } from "./features/comments/commentsSlice";
 
 export const store = configureStore({
-	reducer: { listings: listingsSliceReducer, authentication: authenticationSliceReducer },
+	reducer: { listings: listingsSliceReducer, authentication: authenticationSliceReducer, comments: commentsSliceReducer },
 	middleware: (getDefaultMiddleware) => getDefaultMiddleware().prepend().concat(logger),
 });
 

@@ -1,6 +1,8 @@
-import { Created, Thing, Votable, Listing } from "../../global-types";
+import { CommentCreated, CommentVotable, Listing, Link } from "../../global-types";
 
-export interface Comment extends Thing, Votable, Created {
+export type CommentsResponse = [Listing<Link>, Listing<Comment>];
+
+export interface Comment extends CommentVotable, CommentCreated {
 	approved_by: string | null;
 	author: string;
 	author_flair_css_class: string | null;
@@ -17,7 +19,7 @@ export interface Comment extends Thing, Votable, Created {
 	link_url: string;
 	num_reports: number | null;
 	parent_id: string;
-	replies: Listing;
+	replies: Listing<Comment>;
 	saved: boolean;
 	score: number;
 	score_hidden: boolean;

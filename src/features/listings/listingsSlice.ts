@@ -1,20 +1,34 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { Listing } from "../../global-types";
+import { Listing, Link } from "../../global-types";
+import { getListing } from "./listings-thunks";
 
 export interface ListingsState {
 	loading: boolean;
-	listings: Listing[] | null;
+	listing: Listing<Link> | null;
+	errorMessage: string | null;
 }
 
 const initialState: ListingsState = {
 	loading: false,
-	listings: null,
+	listing: null,
+	errorMessage: null,
 };
 
 const listingsSlice = createSlice({
 	name: "listings",
 	initialState,
 	reducers: {},
+	extraReducers: {
+		[getListing.pending.type]: (state) => {
+			return { ...state, loading: true };
+		},
+		[getListing.fulfilled.type]: (state, action) => {
+			return { ...state, loading: false, listing: action.payload.listing, errorMessage: action.payload.errorMessage };
+		},
+		[getListing.rejected.type]: (state, action) => {
+			return { ...state, errorMessage: action.payload.errorMessage };
+		},
+	},
 });
 
 export const listingsSliceActions = listingsSlice.actions;

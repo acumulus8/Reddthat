@@ -1,3 +1,5 @@
+import { Comment } from "./features/comments/types";
+
 export type Kind = "Listing" | "more" | "t1" | "t2" | "t3" | "t4" | "t5";
 export type Scopes =
 	| "identity"
@@ -20,29 +22,45 @@ export type Scopes =
 	| "wikiedit"
 	| "wikiread";
 
-export interface Thing {
+export interface Thing<DataType> {
 	id: string;
 	name: string;
 	kind: Kind;
-	data: string;
+	data?: DataType;
 }
 
-export type Listing = {
-	kind: Kind;
-	data: Thing[];
+export type ListingData<ChildrenDataType> = {
+	after: string | null;
+	before: string | null;
+	children?: Thing<ChildrenDataType>[];
+	dist: number;
+	modhash: string;
 };
 
-export interface Votable extends Thing {
+export type Listing<ListingDataType> = {
+	kind: Kind;
+	data: ListingData<ListingDataType>;
+};
+
+export interface Votable extends Thing<Link> {
+	ups: number;
+	downs: number;
+	likes: boolean | null;
+}
+export interface CommentVotable extends Thing<Comment> {
 	ups: number;
 	downs: number;
 	likes: boolean | null;
 }
 
-export interface Created extends Thing {
-	created: Date;
+export interface Created extends Thing<Link> {
+	created: number;
+}
+export interface CommentCreated extends Thing<Comment> {
+	created: number;
 }
 
-export interface Link extends Thing, Votable, Created {
+export interface Link extends Votable, Created {
 	author: string;
 	author_flair_css_class: string | null;
 	author_flair_text: string | null;

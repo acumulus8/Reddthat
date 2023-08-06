@@ -1,17 +1,7 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { AuthenticationState } from "./authenticationSlice";
 import { RedditApi } from "../../lib/api";
-
-export const getTokenFromLocalStorage = () => {
-	const token = localStorage.getItem("token");
-	return token;
-};
-export const setTokenInLocalStorage = (token: string) => {
-	localStorage.setItem("token", token);
-	if (token === null) {
-		localStorage.removeItem("token");
-	}
-};
+import { getTokenFromLocalStorage, setTokenInLocalStorage } from "../../lib/utils";
 
 export const getApiTokenForApp = createAsyncThunk<Partial<AuthenticationState>>("authentication/getApiTokenForApp", async () => {
 	const possibleToken = getTokenFromLocalStorage();

@@ -1,9 +1,9 @@
 import React, { useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { Select, SelectProps } from "antd";
 import { CaretDownOutlined } from "@ant-design/icons";
-import { Subreddit } from "../features/subreddits/types";
-import { uiColors } from "../styles/theme";
+import { Subreddit } from "../../features/subreddits/types";
+import { uiColors } from "../../styles/theme";
 
 type SelectOption = Required<SelectProps>["options"][number];
 
@@ -33,6 +33,7 @@ interface SubredditNavMenuProps {
 const SubredditNavMenu: React.FC<Partial<SubredditNavMenuProps>> = ({ subreddits }) => {
 	const [options, setOptions] = React.useState<SelectOption[]>([]);
 	const navigate = useNavigate();
+	const params = useParams();
 
 	useEffect(() => {
 		if (subreddits && !!subreddits.length) {
@@ -44,9 +45,9 @@ const SubredditNavMenu: React.FC<Partial<SubredditNavMenuProps>> = ({ subreddits
 	}, [subreddits]);
 
 	const onChange = (selectOptionValue: string) => {
-		console.log("onChange", selectOptionValue);
-		const param = selectOptionValue === "Home" ? "" : selectOptionValue;
-		navigate(`/${param}`, { replace: true });
+		const currentParam = params.listingId;
+		const newParam = selectOptionValue === "Home" ? "" : selectOptionValue;
+		navigate(`/${newParam}`, { state: { from: currentParam } });
 	};
 
 	return (
@@ -56,7 +57,7 @@ const SubredditNavMenu: React.FC<Partial<SubredditNavMenuProps>> = ({ subreddits
 					options={options}
 					suffixIcon={<CaretDownOutlined style={{ color: uiColors.orange1 }} />}
 					style={selectStyles}
-					defaultValue={"home"}
+					defaultValue={"Home"}
 					loading={!subreddits?.length}
 					onChange={onChange}
 				/>
