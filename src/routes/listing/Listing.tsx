@@ -20,14 +20,19 @@ const Listing: React.FC<ListingProps> = () => {
 	React.useEffect(() => {
 		if (authentication.token === null) {
 			dispatch(getApiTokenForApp());
+		} else {
+			const from = location.state && location.state.from;
+			if ((from && !from.includes(params.listingType)) || !from) {
+				dispatch(getListing(params.listingType));
+			}
 		}
-	}, [authentication.token, dispatch]);
-	React.useEffect(() => {
-		const from = location.state && location.state.from;
-		if ((from && !from.includes(params.listingType)) || !from) {
-			dispatch(getListing(params.listingType));
-		}
-	}, [params, dispatch, location.state]);
+	}, [authentication.token, dispatch, params.listingType, location.state]);
+	// React.useEffect(() => {
+	// 	const from = location.state && location.state.from;
+	// 	if ((from && !from.includes(params.listingType)) || !from) {
+	// 		dispatch(getListing(params.listingType));
+	// 	}
+	// }, [params, dispatch, location.state]);
 
 	const renderListing = () => {
 		if (listings.loading) {
@@ -39,7 +44,7 @@ const Listing: React.FC<ListingProps> = () => {
 				return <Link key={post.data.id} data={post.data} />;
 			});
 		}
-		return <span>Nothing here</span>;
+		return <span>ListingSkeleton here</span>;
 	};
 
 	return (

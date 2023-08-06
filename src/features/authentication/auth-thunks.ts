@@ -6,7 +6,7 @@ import { getTokenFromLocalStorage, setTokenInLocalStorage } from "../../lib/util
 export const getApiTokenForApp = createAsyncThunk<Partial<AuthenticationState>>("authentication/getApiTokenForApp", async () => {
 	const possibleToken = getTokenFromLocalStorage();
 	if (possibleToken) {
-		console.log("_____RETURNING EXISTING TOKEN FROM LOCAL STORAGE");
+		console.log("_____RETURNING EXISTING TOKEN FROM LOCAL STORAGE: ", possibleToken);
 		return { token: possibleToken };
 	}
 	try {

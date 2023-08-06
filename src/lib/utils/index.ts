@@ -19,6 +19,9 @@ export function getTimeDifference(created: number) {
 
 export function getTokenFromLocalStorage() {
 	const token = localStorage.getItem("token");
+	if (token === null || token === "undefined") {
+		return null;
+	}
 	return token;
 }
 export function setTokenInLocalStorage(token: string) {
