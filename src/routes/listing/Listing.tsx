@@ -27,12 +27,6 @@ const Listing: React.FC<ListingProps> = () => {
 			}
 		}
 	}, [authentication.token, dispatch, params.listingType, location.state]);
-	// React.useEffect(() => {
-	// 	const from = location.state && location.state.from;
-	// 	if ((from && !from.includes(params.listingType)) || !from) {
-	// 		dispatch(getListing(params.listingType));
-	// 	}
-	// }, [params, dispatch, location.state]);
 
 	const renderListing = () => {
 		if (listings.loading) {
@@ -55,14 +49,6 @@ const Listing: React.FC<ListingProps> = () => {
 			)} */}
 			<Space direction="vertical" size={10} style={{ width: "100%" }}>
 				{renderListing()}
-				{/* {!listings.loading && listings.listing && listings.listing.data && listings.listing.data.children?.length ? (
-					listings.listing.data.children.map((post) => {
-						if (!post.data || post.data.over_18) return null;
-						return <Link key={post.data.id} data={post.data} />;
-					})
-				) : (
-					<span>Nothing HERE@</span>
-				)} */}
 			</Space>
 		</>
 	);
