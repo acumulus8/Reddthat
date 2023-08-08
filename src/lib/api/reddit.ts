@@ -1,5 +1,6 @@
-import { getTokenFromLocalStorage } from "../utils";
+import { getTokenFromLocalStorage, removeTokenFromLocalStorage } from "../utils";
 import { Listing, Link } from "../../global-types";
+import RedditError from "../errors/reddit-error";
 
 const { REACT_APP_REDDIT_CLIENT_ID, REACT_APP_REDDIT_APP_SECRET } = process.env;
 const unAuthedRootUrl = "https://www.reddit.com/api/v1";
@@ -28,7 +29,7 @@ export const RedditApi = {
 	getListing: async (typeOrThingId: string, limit: number): Promise<Listing<Link>> => {
 		const token = getTokenFromLocalStorage();
 
-		const response = await fetch(`${authedRootUrl}/${typeOrThingId}?limit=${limit}`, {
+		const response: Response = await fetch(`${authedRootUrl}/${typeOrThingId}?limit=${limit}`, {
 			method: "GET",
 			mode: "cors",
 			credentials: "omit",
@@ -36,7 +37,10 @@ export const RedditApi = {
 				Authorization: `Bearer ${token}`,
 			},
 		});
-
+		if (response.status === 401) {
+			removeTokenFromLocalStorage();
+			throw new RedditError("Unauthorized", { status: response.status });
+		}
 		const responseJson = await response.json();
 		return responseJson;
 	},

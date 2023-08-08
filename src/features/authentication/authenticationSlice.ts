@@ -1,6 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { getApiTokenForApp } from "./auth-thunks";
-import { message } from "antd";
 
 export interface AuthenticationState {
 	loading: boolean;
@@ -17,7 +16,11 @@ const initialState: AuthenticationState = {
 const authenticationSlice = createSlice({
 	name: "authentication",
 	initialState,
-	reducers: {},
+	reducers: {
+		clearToken: (state) => {
+			return { ...state, token: null };
+		},
+	},
 	extraReducers: {
 		[getApiTokenForApp.pending.type]: (state) => {
 			return { ...state, loading: true };
@@ -33,5 +36,3 @@ const authenticationSlice = createSlice({
 
 export const authenticationSliceActions = authenticationSlice.actions;
 export const authenticationSliceReducer = authenticationSlice.reducer;
-
-console.log("authenticationSliceActions: ", authenticationSliceActions);

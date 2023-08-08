@@ -25,8 +25,13 @@ export function getTokenFromLocalStorage() {
 	return token;
 }
 export function setTokenInLocalStorage(token: string) {
-	localStorage.setItem("token", token);
 	if (token === null) {
 		localStorage.removeItem("token");
 	}
+	localStorage.setItem("token", token);
+}
+
+export function removeTokenFromLocalStorage() {
+	localStorage.removeItem("token");
+	return null;
 }
