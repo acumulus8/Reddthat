@@ -1,3 +1,7 @@
+import "react-app-polyfill/stable";
+import "core-js/stable";
+import "regenerator-runtime/runtime";
+import "./polyfill";
 import React from "react";
 import { createRoot } from "react-dom/client";
 import { Provider } from "react-redux";

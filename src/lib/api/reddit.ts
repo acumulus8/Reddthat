@@ -5,7 +5,6 @@ import RedditError from "../errors/reddit-error";
 const { REACT_APP_REDDIT_CLIENT_ID, REACT_APP_REDDIT_APP_SECRET } = process.env;
 const unAuthedRootUrl = "https://www.reddit.com/api/v1";
 const authedRootUrl = "https://oauth.reddit.com";
-const userAgent = "web:com.reddthatportfolioapp:v0.1.0 (by /u/bigabear)";
 
 export const RedditApi = {
 	getAppOnlyToken: async () => {
@@ -18,7 +17,6 @@ export const RedditApi = {
 			mode: "cors",
 			credentials: "omit",
 			headers: {
-				"User-Agent": userAgent,
 				Authorization: `Basic ${appOnlyAuthString}`,
 			},
 			body: body,

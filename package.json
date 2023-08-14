@@ -1,54 +1,50 @@
 {
-  "name": "reddthat",
-  "version": "0.1.0",
-  "private": true,
-  "dependencies": {
-    "@reduxjs/toolkit": "^1.9.5",
-    "@testing-library/jest-dom": "^5.17.0",
-    "@testing-library/react": "^13.4.0",
-    "@testing-library/user-event": "^13.5.0",
-    "@types/jest": "^29.5.3",
-    "@types/node": "^20.4.5",
-    "@types/react": "^18.2.16",
-    "@types/react-dom": "^18.2.7",
-    "antd": "^5.7.3",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
-    "react-redux": "^8.1.1",
-    "react-router-dom": "^6.14.2",
-    "react-scripts": "5.0.1",
-    "redux": "^4.2.1",
-    "redux-logger": "^3.0.6",
-    "redux-thunk": "^2.4.2",
-    "typescript": "^5.1.6",
-    "web-vitals": "^2.1.4"
-  },
-  "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject"
-  },
-  "eslintConfig": {
-    "extends": [
-      "react-app",
-      "react-app/jest"
-    ]
-  },
-  "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
-    ]
-  },
-  "devDependencies": {
-    "@types/redux-logger": "^3.0.9",
-    "eslint-config-react-app": "^7.0.1"
-  }
+	"name": "reddthat",
+	"version": "0.1.0",
+	"private": true,
+	"dependencies": {
+		"@reduxjs/toolkit": "^1.9.5",
+		"antd": "^5.7.3",
+		"core-js": "^3.32.0",
+		"react": "^18.2.0",
+		"react-app-polyfill": "^3.0.0",
+		"react-dom": "^18.2.0",
+		"react-redux": "^8.1.1",
+		"react-router-dom": "^6.14.2",
+		"react-scripts": "^5.0.1",
+		"redux": "^4.2.1",
+		"redux-logger": "^3.0.6",
+		"redux-thunk": "^2.4.2",
+		"typescript": "^5.1.6",
+		"web-vitals": "^2.1.4"
+	},
+	"devDependencies": {
+		"@babel/preset-env": "^7.22.10",
+		"@testing-library/jest-dom": "^5.17.0",
+		"@testing-library/react": "^13.4.0",
+		"@testing-library/user-event": "^13.5.0",
+		"@types/jest": "^29.5.3",
+		"@types/node": "^20.4.5",
+		"@types/react": "^18.2.16",
+		"@types/react-dom": "^18.2.7",
+		"eslint-config-react-app": "^7.0.1",
+		"@types/redux-logger": "^3.0.9"
+	},
+	"scripts": {
+		"start": "react-scripts start",
+		"build": "react-scripts build",
+		"test": "react-scripts test",
+		"eject": "react-scripts eject"
+	},
+	"eslintConfig": {
+		"extends": [
+			"react-app",
+			"react-app/jest"
+		]
+	},
+	"browserslist": [
+		"> 1%",
+		"last 5 versions",
+		"iOS >= 8"
+	]
 }
