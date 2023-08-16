@@ -4,9 +4,15 @@ import { TypedUseSelectorHook, useDispatch, useSelector } from "react-redux";
 import { listingsSliceReducer } from "./features/listings/listingsSlice";
 import { authenticationSliceReducer } from "./features/authentication/authenticationSlice";
 import { commentsSliceReducer } from "./features/comments/commentsSlice";
+import { subredditsSliceReducer } from "./features/subreddits/subredditsSlice";
 
 export const store = configureStore({
-	reducer: { listings: listingsSliceReducer, authentication: authenticationSliceReducer, comments: commentsSliceReducer },
+	reducer: {
+		listings: listingsSliceReducer,
+		authentication: authenticationSliceReducer,
+		comments: commentsSliceReducer,
+		subreddits: subredditsSliceReducer,
+	},
 	middleware: (getDefaultMiddleware) => getDefaultMiddleware().prepend().concat(logger),
 });
 

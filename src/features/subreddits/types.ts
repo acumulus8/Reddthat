@@ -1,5 +1,3 @@
-import { Thing } from "../../global-types";
-
 export type SubredditType = "public" | "private" | "restricted" | "gold_restricted" | "archived";
 export type SubmissionType = "any" | "link" | "self";
 
@@ -9,6 +7,7 @@ export interface Subreddit {
 	description: string;
 	description_html: string;
 	display_name: string;
+	display_name_prefixed: string;
 	header_img: string | null;
 	header_size: number[] | null;
 	header_title: string | null;

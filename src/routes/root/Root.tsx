@@ -1,11 +1,12 @@
 import React from "react";
 import { useSelector } from "react-redux";
 import { Outlet } from "react-router-dom";
-import { Layout, message, Affix } from "antd";
+import { Layout, message } from "antd";
 import PageHeader from "../../components/PageHeader";
+import SideBar from "../../components/SideBar";
 import { RootState } from "../../store";
 
-const { Content, Footer, Sider } = Layout;
+const { Content, Footer } = Layout;
 
 const Root = () => {
 	const [messageApi, contextHolder] = message.useMessage();
@@ -28,11 +29,7 @@ const Root = () => {
 					{contextHolder}
 					<Outlet />
 				</Content>
-				<Affix offsetTop={124}>
-					<Sider theme="light" width={300} style={sidebarStyles}>
-						Sider
-					</Sider>
-				</Affix>
+				<SideBar />
 			</Layout>
 			<Footer style={{ textAlign: "center" }}>Reddthat (Reddit clone) Created by Tim Wilburn</Footer>
 		</Layout>
@@ -42,11 +39,6 @@ const Root = () => {
 const appBodyStyles = {
 	width: 960,
 	margin: "60px auto 100px auto",
-};
-const sidebarStyles = {
-	padding: 24,
-	marginLeft: 40,
-	height: "calc(80vh - 160px)",
 };
 
 export default Root;

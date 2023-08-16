@@ -12,6 +12,7 @@ export const getApiTokenForApp = createAsyncThunk<Partial<AuthenticationState>>(
 	try {
 		console.log("_____GET API TOKEN FOR APP");
 		const token = await RedditApi.getAppOnlyToken();
+		console.log("_____TOKEN: ", token);
 		setTokenInLocalStorage(token.access_token);
 		return { token: token.access_token };
 	} catch (error: any) {

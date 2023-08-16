@@ -9,6 +9,7 @@ import Link from "../../components/Link";
 import Comment from "./components/Comment";
 import { Comment as CommentType } from "../../features/comments/types";
 import ScrollToTop from "../../lib/hooks/useScrollToTop";
+import { getSubredditAbout } from "../../features/subreddits/subreddits-thunks";
 
 const LinkDetails: React.FC = () => {
 	const { listings, comments } = useSelector((state: RootState) => state);
@@ -18,7 +19,7 @@ const LinkDetails: React.FC = () => {
 	const dispatch = useAppDispatch();
 
 	useEffect(() => {
-		if (params.id && listings.listing?.data.children) {
+		if (params.id && listings.listing?.data.children && !comments.selectedPost) {
 			const link = listings.listing.data.children.find((post) => (post.data ? post.data.id === params.id : false));
 			if (link?.data) {
 				const permaLink = link.data.permalink;
@@ -29,6 +30,12 @@ const LinkDetails: React.FC = () => {
 			navigate("/");
 		}
 	}, [params.id, listings.listing, navigate, dispatch]);
+	useEffect(() => {
+		if (comments.selectedPost && comments.selectedPost.data) {
+			const subreddit = comments.selectedPost.data.subreddit;
+			dispatch(getSubredditAbout(subreddit));
+		}
+	}, [comments.selectedPost]);
 
 	const renderComments = () => {
 		if (comments.loading) {
@@ -38,8 +45,8 @@ const LinkDetails: React.FC = () => {
 			return comments.comments.data?.children?.map((comment) => {
 				if (!comment.data) return null;
 				return (
-					<Space size={10}>
-						<Comment key={comment.data.id} data={comment.data as CommentType} />
+					<Space key={comment.data.id} size={10}>
+						<Comment data={comment.data as CommentType} />
 					</Space>
 				);
 			});

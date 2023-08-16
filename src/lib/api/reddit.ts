@@ -57,4 +57,22 @@ export const RedditApi = {
 		const responseJson = await response.json();
 		return responseJson;
 	},
+	getSubredditAbout: async (subreddit: string) => {
+		const token = getTokenFromLocalStorage();
+
+		const response = await fetch(`${authedRootUrl}/r/${subreddit}/about`, {
+			method: "GET",
+			mode: "cors",
+			credentials: "omit",
+			headers: {
+				Authorization: `Bearer ${token}`,
+			},
+		});
+		if (response.status === 401) {
+			removeTokenFromLocalStorage();
+			throw new RedditError("Unauthorized", { status: response.status });
+		}
+		const responseJson = await response.json();
+		return responseJson;
+	},
 };

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useParams, useLocation } from "react-router-dom";
 import { Space } from "antd";
 import { useSelector } from "react-redux";
@@ -8,6 +8,8 @@ import { getListing } from "../../features/listings/listings-thunks";
 import Link from "../../components/Link";
 import ListingCatMenu from "./components/ListingCatMenu";
 import { Link as LinkType, Listing as ListingType } from "../../global-types";
+import { commentsSliceActions } from "../../features/comments/commentsSlice";
+import { subredditsSliceActions } from "../../features/subreddits/subredditsSlice";
 
 interface ListingProps extends Partial<ListingType<LinkType>> {}
 
@@ -17,7 +19,11 @@ const Listing: React.FC<ListingProps> = () => {
 	const params = useParams();
 	const location = useLocation();
 
-	React.useEffect(() => {
+	useEffect(() => {
+		dispatch(commentsSliceActions.clearSelectedPost());
+		dispatch(subredditsSliceActions.clearAboutInfo());
+	}, [dispatch]);
+	useEffect(() => {
 		if (authentication.token === null) {
 			dispatch(getApiTokenForApp());
 		} else {
