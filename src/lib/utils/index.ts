@@ -1,3 +1,14 @@
+export function convertUTCToFormattedDate(utc: number) {
+	const date = new Date(utc * 1000);
+	const formattedDate = date.toLocaleDateString("en-US", {
+		weekday: "short",
+		year: "numeric",
+		month: "short",
+		day: "numeric",
+	});
+	return formattedDate;
+}
+
 export function getTimeDifference(created: number) {
 	const now = new Date().getTime();
 	const difference = now - created;

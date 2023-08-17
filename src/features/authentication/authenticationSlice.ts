@@ -5,12 +5,14 @@ export interface AuthenticationState {
 	loading: boolean;
 	token: string | null;
 	errorMessage: string | null;
+	viewer: string | null;
 }
 
 const initialState: AuthenticationState = {
 	loading: false,
 	token: null,
 	errorMessage: null,
+	viewer: null,
 };
 
 const authenticationSlice = createSlice({

@@ -41,10 +41,11 @@ export const theme = {
 			colorSecondary: uiColors.blue1,
 			colorDanger: uiColors.red1,
 			colorDisabled: uiColors.gray3,
-			colorText: uiColors.orange5,
+			colorText: uiColors.orange1,
 			colorTextSecondary: uiColors.blue5,
 			colorTextDisabled: uiColors.gray4,
 			colorTextDanger: uiColors.white1,
+			colorBorder: uiColors.orange1,
 		},
 		Select: {
 			colorBgContainer: uiColors.orange5,

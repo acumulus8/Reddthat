@@ -25,4 +25,7 @@ export interface Subreddit {
 	user_is_contributor: boolean;
 	user_is_moderator: boolean;
 	user_is_subscriber: boolean;
+	primary_color: string;
+	created_utc: number;
+	icon_img: string;
 }
