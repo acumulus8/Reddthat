@@ -27,8 +27,10 @@ const Post: React.FC<PostProps> = ({ data, isDetailsPage }) => {
 	const hasSelfText = !!data.selftext;
 	const bodyTextSpan = hasSelfText ? (hasThumbnail ? textDefaultSpan : fullSpan) : 0;
 	const bodyThumbnailSpan = hasThumbnail ? (hasSelfText ? thumbnailDefaultSpan : fullSpan) : 0;
+	const hasVideo = !!data.is_video && data.media?.reddit_video;
 
 	const handleClick = () => {
+		if (isDetailsPage) return;
 		navigate(`/post/${data.id}`);
 	};
 
@@ -66,17 +68,22 @@ const Post: React.FC<PostProps> = ({ data, isDetailsPage }) => {
 						{/* Body Content */}
 						<Space direction="vertical" size={20}>
 							<Row gutter={8} onClick={handleClick} style={{ cursor: "pointer" }}>
-								{hasThumbnail && (
-									<>
-										<Col span={bodyTextSpan}>
-											<Paragraph ellipsis={{ rows: 10, expandable: false }}>{data.selftext}</Paragraph>
-										</Col>
-										<Col span={bodyThumbnailSpan}>
-											{" "}
-											<img src={data.thumbnail} alt="thumbnail" />{" "}
-										</Col>
-									</>
-								)}
+								<Col span={bodyTextSpan}>
+									<Paragraph ellipsis={{ rows: 10, expandable: false }}>{data.selftext}</Paragraph>
+								</Col>
+								{hasThumbnail && !isDetailsPage ? (
+									<Col span={bodyThumbnailSpan}>
+										{" "}
+										<img src={data.thumbnail} alt="thumbnail" />{" "}
+									</Col>
+								) : hasVideo ? (
+									<Col span={bodyThumbnailSpan}>
+										{" "}
+										<video autoPlay src={data.media?.reddit_video?.fallback_url} controls />{" "}
+									</Col>
+								) : isDetailsPage && data.url ? (
+									<img src={data.url} style={{ maxWidth: "80%", border: "1px solid lightGray" }} alt="thumbnail" />
+								) : null}
 							</Row>
 
 							{/* Body Footer*/}

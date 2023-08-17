@@ -72,7 +72,7 @@ export interface Link extends Votable, Created {
 	link_flair_css_class: string | null;
 	link_flair_text: string | null;
 	locked: boolean;
-	media: Object | null;
+	media: MediaTypes | null;
 	media_embed: Object | null;
 	num_comments: number;
 	over_18: boolean;
@@ -89,4 +89,22 @@ export interface Link extends Votable, Created {
 	edited: boolean | Date;
 	distinguished: string | null;
 	stickied: boolean;
+	is_video: boolean;
 }
+
+export type MediaTypes = {
+	reddit_video: RedditVideo;
+};
+
+export type RedditVideo = {
+	fallback_url: string;
+	height: number;
+	width: number;
+	scrubber_media_url: string;
+	dash_url: string;
+	duration: number;
+	hls_url: string;
+	is_gif: boolean;
+	transcoding_status: string;
+	bitrate_kbps: number;
+};
