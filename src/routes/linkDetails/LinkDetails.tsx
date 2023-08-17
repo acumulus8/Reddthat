@@ -7,6 +7,7 @@ import { useAppDispatch, RootState } from "../../store";
 import { Link as LinkType } from "../../global-types";
 import Link from "../../components/Link";
 import Comment from "./components/Comment";
+import CommentsSkeleton from "../../components/Skeletons/CommentsSkeleton";
 import { Comment as CommentType } from "../../features/comments/types";
 import ScrollToTop from "../../lib/hooks/useScrollToTop";
 import { getSubredditAbout } from "../../features/subreddits/subreddits-thunks";
@@ -39,7 +40,7 @@ const LinkDetails: React.FC = () => {
 
 	const renderComments = () => {
 		if (comments.loading) {
-			return <span>Loading...</span>;
+			return <CommentsSkeleton />;
 		}
 		if (comments.comments) {
 			return comments.comments.data?.children?.map((comment) => {

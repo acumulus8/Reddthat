@@ -4,6 +4,7 @@ import { RootState } from "../../store";
 import { Layout, Affix } from "antd";
 import SubredditSideBar from "./SubredditSideBar";
 import DefaultSideBar from "./DefaultSidebar";
+import SideBarSkeleton from "../Skeletons/SideBarSkeleton";
 
 const { Sider } = Layout;
 
@@ -31,7 +32,7 @@ const SideBar: React.FC = () => {
 	return (
 		<Affix offsetTop={124}>
 			<Sider theme="light" width={300} style={styles.root}>
-				{SideBarComponent}
+				{subreddits.loading ? <SideBarSkeleton /> : SideBarComponent}
 			</Sider>
 		</Affix>
 	);

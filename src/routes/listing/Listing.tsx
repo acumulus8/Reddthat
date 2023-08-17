@@ -10,6 +10,7 @@ import ListingCatMenu from "./components/ListingCatMenu";
 import { Link as LinkType, Listing as ListingType } from "../../global-types";
 import { commentsSliceActions } from "../../features/comments/commentsSlice";
 import { subredditsSliceActions } from "../../features/subreddits/subredditsSlice";
+import ListingSkeleton from "../../components/Skeletons/ListingSkeleton";
 
 interface ListingProps extends Partial<ListingType<LinkType>> {}
 
@@ -36,7 +37,7 @@ const Listing: React.FC<ListingProps> = () => {
 
 	const renderListing = () => {
 		if (listings.loading) {
-			return <span>Loading...</span>;
+			return <ListingSkeleton />;
 		}
 		if (listings.listing) {
 			return listings.listing.data?.children?.map((post) => {

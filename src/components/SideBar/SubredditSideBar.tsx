@@ -75,6 +75,7 @@ const SubredditSideBar: React.FC<SubredditSideBarProps> = ({ data }) => {
 const styles = {
 	header: (primary_color: string): Object => ({
 		minWidth: "100%",
+		maxWidth: "100%",
 		height: 20,
 		backgroundColor: primary_color,
 		position: "absolute",
