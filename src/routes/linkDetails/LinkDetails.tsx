@@ -11,6 +11,7 @@ import CommentsSkeleton from "../../components/Skeletons/CommentsSkeleton";
 import { Comment as CommentType } from "../../features/comments/types";
 import ScrollToTop from "../../lib/hooks/useScrollToTop";
 import { getSubredditAbout } from "../../features/subreddits/subreddits-thunks";
+import { SCREEN_SIZE } from "../../lib/utils/constants";
 
 const LinkDetails: React.FC = () => {
 	const { listings, comments } = useSelector((state: RootState) => state);
@@ -18,6 +19,7 @@ const LinkDetails: React.FC = () => {
 	const params = useParams();
 	const navigate = useNavigate();
 	const dispatch = useAppDispatch();
+	const isMobile = window.innerWidth <= SCREEN_SIZE.TABLET;
 
 	useEffect(() => {
 		if (params.id && listings.listing?.data.children && !comments.selectedPost) {
@@ -59,7 +61,7 @@ const LinkDetails: React.FC = () => {
 		<>
 			<ScrollToTop />
 			<Link data={selectedLink} isDetailsPage />
-			<Card>{renderComments()}</Card>
+			<Card bodyStyle={isMobile ? { paddingLeft: 8 } : {}}>{renderComments()}</Card>
 		</>
 	);
 };
