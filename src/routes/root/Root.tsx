@@ -1,16 +1,19 @@
 import React from "react";
 import { useSelector } from "react-redux";
 import { Outlet } from "react-router-dom";
-import { Layout, message } from "antd";
+import { Layout, message, Affix } from "antd";
 import PageHeader from "../../components/PageHeader";
 import SideBar from "../../components/SideBar";
 import { RootState } from "../../store";
+import { SCREEN_SIZE, APP_PADDING } from "../../lib/utils/constants";
 
 const { Content, Footer } = Layout;
 
 const Root = () => {
 	const [messageApi, contextHolder] = message.useMessage();
 	const { authentication, listings } = useSelector((state: RootState) => state);
+
+	const isMobile = window.innerWidth <= SCREEN_SIZE.TABLET;
 
 	React.useEffect(() => {
 		if (authentication.errorMessage) {
@@ -24,14 +27,19 @@ const Root = () => {
 	return (
 		<Layout hasSider={false}>
 			<PageHeader />
-			<Layout hasSider style={appBodyStyles}>
+			<Layout hasSider style={isMobile ? appBodyMobileStyles : appBodyStyles}>
 				<Content>
+					{isMobile && <SideBar />}
 					{contextHolder}
 					<Outlet />
 				</Content>
-				<SideBar />
+				{!isMobile && (
+					<Affix offsetTop={124}>
+						<SideBar />
+					</Affix>
+				)}
 			</Layout>
-			<Footer style={{ textAlign: "center" }}>Reddthat (Reddit clone) Created by Tim Wilburn</Footer>
+			<Footer style={footerStyles}>Reddthat (Reddit clone) Created by Tim Wilburn</Footer>
 		</Layout>
 	);
 };
@@ -39,6 +47,13 @@ const Root = () => {
 const appBodyStyles = {
 	width: 960,
 	margin: "60px auto 100px auto",
+};
+const appBodyMobileStyles = {
+	width: "100%",
+	padding: `0 ${APP_PADDING.MOBILE}px`,
+};
+const footerStyles: any = {
+	textAlign: "center",
 };
 
 export default Root;

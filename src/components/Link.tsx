@@ -5,6 +5,7 @@ import { LikeOutlined, DislikeOutlined, UserOutlined, CommentOutlined } from "@a
 import { Link as ListingData } from "../global-types";
 import { uiColors } from "../styles/theme";
 import { getTimeDifference } from "../lib/utils";
+import { SCREEN_SIZE } from "../lib/utils/constants";
 
 const { Paragraph, Text, Title } = Typography;
 
@@ -15,6 +16,7 @@ type PostProps = {
 
 const Post: React.FC<PostProps> = ({ data, isDetailsPage }) => {
 	const navigate = useNavigate();
+	const isMobile = window.innerWidth <= SCREEN_SIZE.TABLET;
 
 	if (!data) {
 		return null;
@@ -34,19 +36,21 @@ const Post: React.FC<PostProps> = ({ data, isDetailsPage }) => {
 		navigate(`/post/${data.id}`);
 	};
 
+	const likeDislikeContent = (
+		<Space direction={isMobile ? "horizontal" : "vertical"} style={isMobile ? { opacity: 0.8 } : {}} align="center">
+			<LikeOutlined style={data.likes ? { color: uiColors.orange1 } : {}} />
+			<Text style={{ fontSize: 12 }}>{data.ups}</Text>
+			<DislikeOutlined style={data.likes === false ? { color: uiColors.orange1 } : {}} />
+		</Space>
+	);
+	// be contientious of adjusting things based on isMobile - it is used to determine whether or not to render certain elements as well as the gutter, spacing, and positioning of elements - be sure sibling elements are aware of the changes to gutter and spacing
 	return (
-		<Card style={postStyle}>
-			<Row gutter={12}>
+		<Card style={isMobile ? postMobileStyle : postStyle}>
+			<Row gutter={isMobile ? 8 : 12}>
 				{/* Post Sidebar*/}
-				<Col span={2}>
-					<Space direction="vertical" align="center">
-						<LikeOutlined style={data.likes ? { color: uiColors.orange1 } : {}} />
-						<Text style={{ fontSize: 12 }}>{data.ups}</Text>
-						<DislikeOutlined style={data.likes === false ? { color: uiColors.orange1 } : {}} />
-					</Space>
-				</Col>
+				{!isMobile && <Col span={2}>{likeDislikeContent}</Col>}
 				{/* Post Body*/}
-				<Col span={22}>
+				<Col span={isMobile ? 24 : 22}>
 					<Space direction="vertical">
 						{/*Body Header*/}
 						<Row onClick={handleClick} style={{ cursor: "pointer" }}>
@@ -56,8 +60,11 @@ const Post: React.FC<PostProps> = ({ data, isDetailsPage }) => {
 										<Avatar size={24} style={postAvatarStyle} icon={<UserOutlined />} />
 										<Text>r/{data.subreddit}</Text>
 									</Space>
-									<Text type="secondary">posted by {data.author}</Text>
-									<Text type="secondary">{getTimeDifference(data.created)}</Text>
+									{!isMobile && <Text type="secondary">{data.author}</Text>}
+									<Text type="secondary">
+										{getTimeDifference(data.created)}
+										{!isMobile && " ago"}
+									</Text>
 								</Space>
 								<Title level={5} style={{ marginTop: 0 }}>
 									{data.title}
@@ -87,11 +94,14 @@ const Post: React.FC<PostProps> = ({ data, isDetailsPage }) => {
 							</Row>
 
 							{/* Body Footer*/}
-							<Row>
-								<Space direction="horizontal" align="center">
-									<CommentOutlined style={{ color: uiColors.gray3, fontSize: 22 }} />
-									<Text type="secondary">{data.num_comments} Comments</Text>
-								</Space>
+							<Row gutter={isMobile ? 24 : 0}>
+								<Col>{isMobile && likeDislikeContent}</Col>
+								<Col>
+									<Space direction="horizontal" align="center">
+										<CommentOutlined style={{ color: uiColors.gray3, fontSize: 22 }} />
+										<Text type="secondary">{data.num_comments} Comments</Text>
+									</Space>
+								</Col>
 							</Row>
 						</Space>
 					</Space>
@@ -104,6 +114,11 @@ const Post: React.FC<PostProps> = ({ data, isDetailsPage }) => {
 const postStyle = {
 	minWidth: "100%",
 	maxWidth: "100%",
+};
+const postMobileStyle = {
+	// minWidth: "96%",
+	// maxWidth: "96%",
+	// margin: "0 auto",
 };
 const postAvatarStyle = {
 	color: uiColors.blue1,

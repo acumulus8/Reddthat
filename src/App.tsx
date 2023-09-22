@@ -1,6 +1,6 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import { ConfigProvider as ThemeProvider, Modal } from "antd";
+import { ConfigProvider as ThemeProvider } from "antd";
 
 import Root from "./routes/root/Root";
 import Listing from "./routes/listing/Listing";
